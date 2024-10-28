@@ -103,24 +103,21 @@ public class TaskManager {
     }
 
     public void createTask(Task task) {
-        task.setId(taskCounter + 1);
-        taskCounter++;
+        task.setId(++taskCounter);
 
         tasks.put(task.getId(), task);
         System.out.printf("Создана задача %s.\n", task);
     }
 
     public void createEpic(Epic epic) {
-        epic.setId(taskCounter + 1);
-        taskCounter++;
+        epic.setId(++taskCounter);
 
         epics.put(epic.getId(), epic);
         System.out.printf("Создан эпик %s.\n", epic);
     }
 
     public void createSubtask(Subtask subtask) {
-        subtask.setId(taskCounter + 1);
-        taskCounter++;
+        subtask.setId(++taskCounter);
 
         int subtaskEpicId = subtask.getEpicId();
         Epic subtaskEpic = epics.get(subtaskEpicId);
@@ -130,62 +127,42 @@ public class TaskManager {
         System.out.printf("Создана подзадача %s.\n", subtask);
     }
 
-    public void updateTaskById(int id, Task newTask) {
-        Task task = getTaskById(id);
+    public void updateTask(Task newTask) {
+        int taskId = newTask.getId();
 
-        if (task == null) {
-            return;
+        if (tasks.containsKey(taskId)) {
+            tasks.put(taskId, newTask);
+        } else {
+            System.out.printf("Задание с идентификатором %d отсутствует.\n", taskId);
         }
-
-        task.setName(newTask.getName());
-        task.setDescription(newTask.getDescription());
-        task.setStatus(newTask.getStatus());
-        task.setId(newTask.getId());
     }
 
-    public void updateEpicById(int id, Epic newEpic) {
-        Epic epic = getEpicById(id);
+    public void updateEpic(Epic newEpic) {
+        int epicId = newEpic.getId();
 
-        if (epic == null) {
-            return;
+        if (epics.containsKey(epicId)) {
+            epics.put(epicId, newEpic);
+            updateEpicStatusById(epicId);
+        } else {
+            System.out.printf("Эпик с идентификатором %d отсутствует.\n", epicId);
         }
-
-        epic.setName(newEpic.getName());
-        epic.setDescription(newEpic.getDescription());
-        epic.setStatus(newEpic.getStatus());
-        epic.setId(newEpic.getId());
-        epic.setSubtasks(newEpic.getSubtasks());
     }
 
-    public void updateSubtaskById(int id, Subtask newSubtask) {
-        Subtask subtask = getSubtaskById(id);
+    public void updateSubtask(Subtask newSubtask) {
+        int subtaskId = newSubtask.getId();
 
-        if (subtask == null) {
-            return;
+        if (subtasks.containsKey(subtaskId)) {
+            subtasks.put(subtaskId, newSubtask);
+            int epicId = newSubtask.getEpicId();
+            updateEpicStatusById(epicId);
+        } else {
+            System.out.printf("Подзадача с идентификатором %d отсутствует.\n", subtaskId);
         }
-
-        int epicId = subtask.getEpicId();
-        Epic epic = epics.get(epicId);
-
-        subtask.setName(newSubtask.getName());
-        subtask.setDescription(newSubtask.getDescription());
-        subtask.setStatus(newSubtask.getStatus());
-        subtask.setId(newSubtask.getId());
-        subtask.setEpicId(newSubtask.getEpicId());
-
-        epic.getSubtasks().remove(subtask);
-        updateEpicStatusById(epicId);
     }
 
     public void removeTaskById(int id) {
-        Task task = getTaskById(id);
-
-        if (task == null) {
-            return;
-        }
-
         tasks.remove(id);
-        System.out.printf("Удалена задача %s.\n", task);
+        System.out.printf("Удалена задача %d.\n", id);
     }
 
     public void removeEpicById(int id) {
@@ -203,7 +180,7 @@ public class TaskManager {
             }
         }
         epics.remove(id);
-        System.out.printf("Удалён эпик %s.\n", epic);
+        System.out.printf("Удалён эпик %d.\n", id);
     }
 
     public void removeSubtaskById(int id) {

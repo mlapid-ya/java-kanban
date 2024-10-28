@@ -37,12 +37,15 @@ public class Main {
 
         taskManager.removeSubtaskById(subtask1.getId());
 
-        taskManager.updateSubtaskById(subtask2.getId(), subtask3);
+        subtask2.setStatus(Status.NEW);
+        taskManager.updateSubtask(subtask2);
+
+        subtask3.setStatus(Status.DONE);
+        taskManager.updateSubtask(subtask3);
+        epic2.getSubtasks().clear();
+        taskManager.updateEpic(epic2);
+
         taskManager.printEpicSubtasksById(epic1.getId());
         taskManager.printEpicSubtasksById(epic2.getId());
-
-////        taskManager.printAllSubTasks();
-////        taskManager.printAllEpics();
-//        taskManager.printEpicSubtasksById(epic2.getId());
     }
 }
