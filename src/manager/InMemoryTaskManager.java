@@ -5,6 +5,7 @@ import model.Status;
 import model.Subtask;
 import model.Task;
 
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -12,29 +13,33 @@ public class InMemoryTaskManager implements TaskManager {
 
     private int taskCounter = 0;
 
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
 
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager;
+
+    InMemoryTaskManager(HistoryManager historyManager) {
+        this.historyManager = historyManager;
+    }
 
     public int getTaskCounter() {
         return taskCounter;
     }
 
     @Override
-    public HashMap<Integer, Task> getTasks() {
-        return tasks;
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public HashMap<Integer, Epic> getEpics() {
-        return epics;
+    public ArrayList<Epic> getEpics() {
+        return new ArrayList<>(epics.values());
     }
 
     @Override
-    public HashMap<Integer, Subtask> getSubtasks() {
-        return subtasks;
+    public ArrayList<Subtask> getSubtasks() {
+        return new ArrayList<>(subtasks.values());
     }
 
     @Override
@@ -91,7 +96,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeAllSubtasks() {
 
-        HashMap<Integer, Subtask> subtasksCopy = new HashMap<Integer, Subtask>(this.subtasks);
+        Map<Integer, Subtask> subtasksCopy = new HashMap<Integer, Subtask>(this.subtasks);
 
         for (int id : subtasksCopy.keySet()) {
             removeSubtaskById(id);

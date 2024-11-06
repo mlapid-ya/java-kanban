@@ -6,62 +6,59 @@ import model.Subtask;
 import model.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface TaskManager {
 
-    public HashMap<Integer, Task> getTasks();
+    ArrayList<Task> getTasks();
 
-    public HashMap<Integer, Epic> getEpics();
+    ArrayList<Epic> getEpics();
 
-    public HashMap<Integer, Subtask> getSubtasks();
+    ArrayList<Subtask> getSubtasks();
 
-    public void printAllTasks();
+    void printAllTasks();
 
-    public void printAllEpics();
+    void printAllEpics();
 
-    public void printAllSubtasks();
+    void printAllSubtasks();
 
-    public void removeAllTasks();
+    void removeAllTasks();
 
-    public void removeAllEpics();
+    void removeAllEpics();
 
-    public void removeAllSubtasks();
+    void removeAllSubtasks();
 
-    public Task getTaskById(int id);
+    Task getTaskById(int id);
 
-    public Epic getEpicById(int id);
+    Epic getEpicById(int id);
 
-    public Subtask getSubtaskById(int id);
+    Subtask getSubtaskById(int id);
 
-    public void createTask(Task task);
+    void createTask(Task task);
 
-    public void createEpic(Epic epic);
+    void createEpic(Epic epic);
 
-    public void createSubtask(Subtask subtask);
+    void createSubtask(Subtask subtask);
 
-    public void updateTask(Task newTask);
+    void updateTask(Task newTask);
 
-    public void updateEpic(Epic newEpic);
+    void updateEpic(Epic newEpic);
 
-    public void updateSubtask(Subtask newSubtask);
+    void updateSubtask(Subtask newSubtask);
 
-    public void removeTaskById(int id);
+    void removeTaskById(int id);
 
-    public void removeEpicById(int id);
+    void removeEpicById(int id);
 
-    public void removeSubtaskById(int id);
+    void removeSubtaskById(int id);
 
-    public ArrayList<Subtask> getEpicSubtasksById(int id);
+    ArrayList<Subtask> getEpicSubtasksById(int id);
 
-    public void printEpicSubtasksById(int id);
+    void printEpicSubtasksById(int id);
 
-    public void updateTaskStatusById(int id, Status newStatus);
+    void updateTaskStatusById(int id, Status newStatus);
 
-    public void updateSubtaskStatusById(int id, Status newStatus);
+    void updateSubtaskStatusById(int id, Status newStatus);
 
-    public HistoryManager getHistoryManager();
-
-
+    HistoryManager getHistoryManager();
 
 }
