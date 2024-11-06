@@ -1,11 +1,13 @@
 package model;
 
+import java.util.Objects;
+
 public class Task {
 
     private String name;
     private String description;
     private Status status = Status.NEW;
-    private int id;
+    private Integer id;
 
     public Task(String name, String description) {
         this.name = name;
@@ -24,7 +26,7 @@ public class Task {
         return status;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -40,7 +42,7 @@ public class Task {
         this.status = status;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,7 +53,7 @@ public class Task {
         if (o == null || getClass() != o.getClass())
             return false;
         Task task = (Task) o;
-        return this.id == task.id;
+        return this.id.equals(task.id);
     }
 
     @Override
